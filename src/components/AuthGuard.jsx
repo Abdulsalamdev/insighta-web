@@ -7,9 +7,9 @@ export default function AuthGuard({ children }) {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const check = async () => {
       try {
-        await api.get("/auth/me"); // cookie sent automatically
+        await api.get("/auth/me");
         setIsAuth(true);
       } catch (err) {
         setIsAuth(false);
@@ -18,12 +18,15 @@ export default function AuthGuard({ children }) {
       }
     };
 
-    checkAuth();
+    check();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        Checking session...
+      </div>
+    );
 
-  if (!isAuth) return <Navigate to="/" />;
-
-  return children;
+  return isAuth ? children : <Navigate to="/" />;
 }
