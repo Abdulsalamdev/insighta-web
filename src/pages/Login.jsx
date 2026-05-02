@@ -1,6 +1,30 @@
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import api from "../api/axios";
+
+
+
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Login() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await api.get("/auth/me");
+        navigate("/dashboard");
+      } catch (err) {
+        // not logged in → stay on login
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
+
   const handleLogin = () => {
-    window.location.href = "https://profilegen-api-production.up.railway.app/api/v1/auth/github";
+   window.location.href = `${API_URL}/auth/github`;
   };
 
   return (
