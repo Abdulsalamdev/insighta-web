@@ -20,9 +20,7 @@ export default function Dashboard() {
   };
 
   const handleCreate = async () => {
-    await createProfile({
-      name: "John Doe",
-    });
+    await createProfile({ name: "John Doe" });
     loadProfiles();
   };
 
@@ -37,15 +35,73 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <div style={styles.container}>
       <Navbar />
 
-      <h1>Dashboard</h1>
+      <div style={styles.content}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>Dashboard</h1>
 
-      <button onClick={handleCreate}>Create Profile</button>
-      <button onClick={handleExport}>Export CSV</button>
+          <div style={styles.actions}>
+            <button style={styles.primaryBtn} onClick={handleCreate}>
+              + Create Profile
+            </button>
 
-      <ProfileTable profiles={profiles} />
+            <button style={styles.secondaryBtn} onClick={handleExport}>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div style={styles.card}>
+          <ProfileTable profiles={profiles} />
+        </div>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    background: "#0f172a",
+    minHeight: "100vh",
+    color: "white",
+  },
+  content: {
+    padding: "30px",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+  },
+  title: {
+    fontSize: "28px",
+  },
+  actions: {
+    display: "flex",
+    gap: "10px",
+  },
+  primaryBtn: {
+    background: "#22c55e",
+    border: "none",
+    padding: "10px 16px",
+    borderRadius: "8px",
+    color: "white",
+    cursor: "pointer",
+  },
+  secondaryBtn: {
+    background: "#3b82f6",
+    border: "none",
+    padding: "10px 16px",
+    borderRadius: "8px",
+    color: "white",
+    cursor: "pointer",
+  },
+  card: {
+    background: "#1e293b",
+    padding: "20px",
+    borderRadius: "12px",
+  },
+};
